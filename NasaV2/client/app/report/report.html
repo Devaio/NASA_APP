@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 text-center text-success" ng-if="$ctrl.successMessage">
+      Successfully submitted
+    </div>
+    <div class="col-lg-12">
+      <form class="horizontal-form" id="meteorForm" novalidate="" name="meteorForm" ng-submit="$ctrl.submit(meteorForm, $ctrl.formData)">
+        <p>Track the meteorite in between two dates</p>
+        <fieldset>
+          <br>
+          <div class="row">
+            <div class="col-md-4 col-md-push-6" >
+              <a  href="/"  style="margin-left:220px" class="btn btn-default" name="button">Search</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-push-2 form-group form-group-lg">
+              <label for="">
+                <p>Date:</p>
+              </label>
+                <input name="from" type="text" class="form-control"  ng-model="$ctrl.formData.year"  ng-required="true" ng-pattern="/^[0-9]{4}$/"  />
+
+              <span class="text-danger" ng-messages="meteorForm.from.$error" ng-if="meteorForm.$submitted">
+                <samp ng-message="required">
+                  Please enter  date
+                </samp>
+              </span>
+            </div>
+            <div class="col-md-4 col-md-push-2 form-group-lg">
+              <label for="">
+                <p>Name</p>
+              </label>
+                <input name="name" type="text" class="form-control"  ng-model="$ctrl.formData.name"  datepicker-options="$ctrl.dateOptions" ng-required="true" />
+              <span class="text-danger" ng-messages="meteorForm.name.$error" ng-if="meteorForm.$submitted">
+                <samp ng-message="required">
+                  Please enter name
+                </samp>
+                <samp ng-message="pattern">
+                  Enter valid date range (eg: 2012)
+                </samp>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-push-4 form-group-lg">
+              <label for=""><p>Location</p></label>
+              <input type="text" ng-model="$ctrl.formData.location" name="location" typeahead-on-select="$ctrl.onSelect($item)" placeholder="" uib-typeahead="address.formatted_address for address in $ctrl.getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control" required>
+               <i style="color:white" ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+               <div ng-show="noResults" style="color:white">
+                 <i class="glyphicon glyphicon-remove"></i> No Results Found
+               </div>
+               <span class="text-danger" ng-messages="meteorForm.location.$error" ng-if="meteorForm.$submitted">
+                 <samp ng-message="required">
+                   Please enter location
+                 </samp>
+               </span>
+               <span ng-if="$ctrl.invalidLocation">
+                 <samp>
+                   Please enter valid location
+                 </samp>
+               </span>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4 col-md-push-4">
+              <button type="submit" class="btn btn-success" name="button">Submit</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>

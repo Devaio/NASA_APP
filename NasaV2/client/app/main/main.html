@@ -1,0 +1,114 @@
+<header class="hero-unit" id="banner">
+  <div class="container" >
+    <div class="row">
+      <h3> Meteorite Landing Activity Tracker <h3>
+        <hr>
+        <h6> This tracker will illustrate Meteorite Landings around
+        </br> the world through the years 1880 to Present </h6>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <form class="horizontal-form" novalidate="" name="meteorForm" ng-submit="$ctrl.query(meteorForm, $ctrl.formData)">
+        <!-- <p>Track the meteorite in between two dates</p> -->
+        <fieldset ng-disabled="$ctrl.submitted">
+          <div class="row">
+            <div class="col-md-12" >
+              <a   href="/report"   class="btn  btn-report" name="button">Report</a>
+              <a  ng-click="$ctrl.reset(meteorForm)"   class="btn btn-default" name="button">Reset</a>
+            </div>
+          </div>
+          <br>
+          <!-- <div class="row">
+            <div class="col-md-4 col-md-push-6 text-right" >
+              <a  ng-click="$ctrl.reset(meteorForm)"   class="btn btn-default" name="button">Reset</a>
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="col-md-4 col-md-push-2 form-group form-group-lg">
+              <label for="">
+                <p>From:</p>
+              </label>
+                <input name="from" type="text" class="form-control"  ng-model="$ctrl.formData.from" ng-pattern="/^[0-9]{4}$/"  />
+              <span class="text-danger" ng-messages="meteorForm.from.$error" ng-if="meteorForm.$submitted">
+                <samp ng-message="pattern">
+                  Enter valid date range (eg: 2012)
+                </samp>
+              </span>
+            </div>
+            <div class="col-md-4 col-md-push-2 form-group-lg">
+              <label for="">
+                <p>To:</p>
+              </label>
+                <input name="to" type="text" class="form-control"  ng-model="$ctrl.formData.to"   ng-pattern="/^[0-9]{4}$/"  />
+              <span class="text-danger" ng-messages="meteorForm.to.$error" ng-if="meteorForm.$submitted">
+                <samp ng-message="pattern">
+                  Enter valid date range (eg: 2012)
+                </samp>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-push-2 form-group-lg">
+              <label for=""><p>Location</p></label>
+              <input type="text" ng-model="$ctrl.location" typeahead-on-select="$ctrl.onSelect($item)" placeholder="" uib-typeahead="address.formatted_address for address in $ctrl.getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+               <i style="color:white" ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+               <div ng-show="noResults" style="color:#fff">
+                 <i class="glyphicon glyphicon-remove"></i> No Results Found
+               </div>
+               <span class="text-danger"  ng-if="$ctrl.locationReq">
+                 <samp>
+                   Please enter location
+                 </samp>
+               </span>
+            </div>
+            <div class="col-md-4 col-md-push-2 form-group-lg">
+              <label for=""><p>Name</p></label>
+              <input type="text" ng-model="$ctrl.formData.name" placeholder="" class="form-control">
+              <span class="text-danger"  ng-if="$ctrl.nameReq">
+                <samp>
+                  Please enter meteor name
+                </samp>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-push-4 text-danger" ng-if="$ctrl.enterAtLeastOne">
+              <samp>
+                Please enter atleast name,location,start date or end date
+              </samp>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-4 col-md-push-4 text-danger" ng-if="$ctrl.geolocationReq">
+              <samp>
+                Please choose the geolocation from the recommendation
+              </samp>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4 col-md-push-4">
+              <button type="submit" class="btn btn-success" name="button">Search</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <br>
+  <div class="row" ng-if="$ctrl.submitted">
+    <div class="col-lg-12 text-center">
+     <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <webgl observations="$ctrl.observations"></webgl>
+  </div>
+</div>
